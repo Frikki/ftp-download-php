@@ -67,7 +67,7 @@ vendor/bin/phpunit src
 ```
 
 The tests will download a 1 kB zip file. You can change the FTP settings 
-in *src/config-test.php*. See [test FTP server](ftp://speedtest.tele2.net/) for 
+in *src/config-test.php*. See [test FTP server](http://speedtest.tele2.net/) for 
 other files you can download. Of course, you can, for example, also change the 
 settings to test your own FTP server, or adjust to your liking.
 
