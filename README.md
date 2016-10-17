@@ -8,7 +8,7 @@ Copy the files from the *build* directory to your project.
 
 **Example**
 
-```
+```php
 require_once 'downloadFileThroughFtp.php';
 
 downloadFileThroughFtp(
@@ -27,7 +27,7 @@ production code. Instead, you can use a configuration file that your code reads.
 
 *config.php*
 
-```
+```php
 define( 'FTP_USERNAME', 'username' );
 define( 'FTP_PASSWORD', '*********' );
 define( 'FTP_HOST', 'example.com' );
@@ -37,7 +37,7 @@ define( 'LOCAL_DIRECTORY_PATH', 'path/to/local/directory' );
 
 *your-script.php*
 
-```
+```php
 require_once 'config.php';
 require_once 'downloadFileThroughFtp.php';
 
@@ -56,13 +56,13 @@ You’ll need [Composer](http://getcomposer.org) to build and test.
 
 ### Installing Dependencies
 
-```
+```shell
 php composer.phar install
 ```
 
 ### Run Tests
 
-```
+```shell
 vendor/bin/phpunit src
 ```
 
@@ -73,7 +73,7 @@ settings to test your own FTP server, or adjust to your liking.
 
 ### Build Project
 
-```
+```shell
 vendor/bin/phing
 ```
 
