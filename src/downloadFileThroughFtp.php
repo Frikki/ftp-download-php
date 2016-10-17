@@ -41,19 +41,37 @@ function writeLocalFileFromFtpStream(
     $TMP_PREFIX = 'tmp_';
     $WRITE_ONLY_MODE = 'w';
 
-    $realPathDirectory = realpath( dirname( __FILE__ ) )
-        . DIRECTORY_SEPARATOR
-        . $localDirectoryPath
-        . DIRECTORY_SEPARATOR;
+    $targetPath = computeAbsoluteLocalDirectoryPath( $localDirectoryPath );
 
-    $tmpBaseName = $realPathDirectory . $TMP_PREFIX . $baseName;
+    $tmpBaseName = $targetPath . $TMP_PREFIX . $baseName;
 
     $handle = fopen( $tmpBaseName, $WRITE_ONLY_MODE );
     $isFileWritten = ftp_fget( $ftpStream, $handle, $absolutePath, FTP_BINARY );
     fclose( $handle );
 
     if ( $isFileWritten )
-        rename( $tmpBaseName, $realPathDirectory . $baseName );
+        rename( $tmpBaseName, $targetPath . $baseName );
 
     return $isFileWritten;
+}
+
+function computeAbsoluteLocalDirectoryPath( $localDirectoryPath ) {
+    $PARENT_DIRECTORY_DELIMITER = '../';
+    $RE_PARENT_DIRECTORY = "/\.\.\//";
+
+    preg_match_all( $RE_PARENT_DIRECTORY, $localDirectoryPath, $matches );
+
+    $directoriesUp = rtrim(
+        DIRECTORY_SEPARATOR . implode( "", $matches[ 0 ] ),
+        DIRECTORY_SEPARATOR );
+    $currentDirectory = dirname( __FILE__ );
+    $absolutParent = realpath( $currentDirectory . $directoriesUp );
+    $knownLocalPath = array_pop(
+        explode( $PARENT_DIRECTORY_DELIMITER, $localDirectoryPath ) );
+    $targetPath = $absolutParent .
+        DIRECTORY_SEPARATOR .
+        $knownLocalPath .
+        DIRECTORY_SEPARATOR;
+
+    return $targetPath;
 }
