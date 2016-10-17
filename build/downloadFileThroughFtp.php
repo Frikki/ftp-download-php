@@ -1,6 +1,6 @@
 <?php
 /**
- * brightlife
+ * FTP Download PHP
  *
  * Copyright (c) 2016, Frederik Krautwald. All rights reserved.
  */
